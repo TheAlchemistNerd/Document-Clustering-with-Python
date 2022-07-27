@@ -1,4 +1,5 @@
 from typing import List
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -29,10 +30,14 @@ def bbc_newsfeed_rss(_categories: List):
                 }
                 articles_dict[_category].append(article)
             
-            print(articles_dict)
+            save_data(articles_dict)
         except Exception as e:
             print(f'The Scraping job failed for {_category}. See exception: ')
             print(e)
+
+def save_data(article_dict):
+    with open('article.txt', 'w') as output_file:
+        json.dump(article_dict, output_file)
 
 # different document categories for the BBC news RSS feeds
 categories = ['business','technology','science_and_environment','entertainment_and_arts','sport']
