@@ -30,7 +30,7 @@ def bbc_newsfeed_rss(_categories: List):
                 }
                 articles_list.append(article)
             
-            field_names = ['title','link','published','description','category']
+            field_names = articles_list[0].keys()
             save_data(articles_list, field_names)
         except Exception as e:
             print(f'The Scraping job failed for {_category}. See exception: ')
@@ -40,8 +40,7 @@ def save_data(article_list, field_names, file_path = 'article.csv'):
     with open(file_path, 'w', newline = '', encoding = 'utf-8') as output_file:
         writer = csv.DictWriter(output_file, fieldnames = field_names)
         writer.writeheader()
-        for row_dict in article_list:
-            writer.writerow(row_dict)
+        writer.writerows(article_list)
 
 # different document categories for the BBC news RSS feeds
 categories = ['business','technology','science_and_environment','entertainment_and_arts','sport']
