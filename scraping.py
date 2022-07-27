@@ -1,6 +1,5 @@
 from re import U
 from typing import List
-from regex import P
 import requests
 from bs4 import BeautifulSoup
 
@@ -14,7 +13,8 @@ def bbc_newsfeed_rss(_categories: List):
             url = f'http://feeds.bbci.co.uk/news/{_category}/rss.xml'
         try:
             r = requests.get(url)
-            print(f'The scraping job succeeded for {_category}: ', r.status_code)
+            soup = BeautifulSoup(r.content, features = 'xml')
+            print(soup)
         except Exception as e:
             print(f'The Scraping job failed for {_category}. See exception: ')
             print(e)
